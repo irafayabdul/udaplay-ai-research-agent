@@ -106,6 +106,7 @@ class Agent:
                     name=function_name, 
                 )
                 tool_messages.append(tool_message)
+                print(f"[Tool Calling] Name: {function_name} - Params: {function_args}")
         
         # Clear tool calls and add results to messages
         return {
