@@ -160,6 +160,7 @@ class VectorStoreManager:
 
     def _create_embedding_function(self, api_key: str) -> EmbeddingFunction:
         embeddings_fn = embedding_functions.OpenAIEmbeddingFunction(
+            api_base="https://openai.vocareum.com/v1",
             api_key=api_key
         )
         return embeddings_fn

@@ -1,4 +1,5 @@
 from typing import TypedDict, List, Optional, Union, TypeVar
+import os
 import json
 
 from lib.state_machine import StateMachine, Step, EntryPoint, Termination, Run
@@ -61,7 +62,8 @@ class Agent:
         llm = LLM(
             model=self.model_name,
             temperature=self.temperature,
-            tools=self.tools
+            tools=self.tools,
+            api_key=os.getenv("OPENAI_API_KEY")
         )
 
         response = llm.invoke(state["messages"])
