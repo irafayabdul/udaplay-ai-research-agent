@@ -230,11 +230,6 @@ class StateMachine(Generic[StateSchema]):
             # Replace state entirely
             state = step.run(state, self.state_schema, resource)  
 
-            if isinstance(step, EntryPoint):
-                print(f"[StateMachine] Starting: {current_step_id}")
-            else:
-                print(f"[StateMachine] Executing step: {current_step_id}")
-
             # Create and add snapshot to the current run
             snapshot = Snapshot.create(copy.deepcopy(state), self.state_schema, current_step_id)
             current_run.add_snapshot(snapshot)
@@ -244,6 +239,12 @@ class StateMachine(Generic[StateSchema]):
 
             for t in transitions:
                 next_steps += t.resolve(state)
+
+            # Enhanced logging: Print the snapshot to show the state after each step
+            if isinstance(step, EntryPoint):
+                print(f"[StateMachine] Starting: {current_step_id} -> Next step: {next_steps} \n")
+            else:
+                print(f"[StateMachine] Executing step: [{current_step_id}] -> Response: [{snapshot.state_data['messages'][-1]}] -> Next step: {next_steps} \n")
 
             if not next_steps:
                 raise Exception(f"[StateMachine] No transitions found from step: {current_step_id}")

@@ -106,7 +106,10 @@ class Agent:
                     name=function_name, 
                 )
                 tool_messages.append(tool_message)
+                # keeping it even clearer visibility
                 print(f"[Tool Calling] Name: {function_name} - Params: {function_args}")
+                # Skipping this as the tool_executor step shows result
+                # print(f"[Tool Result]  Name: {function_name} - Result: {result}")
         
         # Clear tool calls and add results to messages
         return {
